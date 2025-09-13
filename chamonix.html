@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamonix - Johan Landscapes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #111111;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #f5f5f5;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .instagram-icon {
+            width: 20px;
+            height: 20px;
+            stroke: #f5f5f5;
+            transition: stroke 0.3s ease;
+        }
+
+        .instagram-link:hover .instagram-icon {
+            stroke: #E4405F;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .collection-header {
+            text-align: center;
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .collection-title {
+            font-size: 3.5rem;
+            font-weight: 100;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .collection-description {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 0 40px 80px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            columns: 3;
+            column-gap: 15px;
+            column-fill: balance;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Staggered animations */
+        .gallery-item:nth-child(1) { animation: fadeInUp 0.6s ease 0.1s forwards; }
+        .gallery-item:nth-child(2) { animation: fadeInUp 0.6s ease 0.2s forwards; }
+        .gallery-item:nth-child(3) { animation: fadeInUp 0.6s ease 0.3s forwards; }
+        .gallery-item:nth-child(4) { animation: fadeInUp 0.6s ease 0.4s forwards; }
+        .gallery-item:nth-child(5) { animation: fadeInUp 0.6s ease 0.5s forwards; }
+        .gallery-item:nth-child(6) { animation: fadeInUp 0.6s ease 0.6s forwards; }
+        .gallery-item:nth-child(7) { animation: fadeInUp 0.6s ease 0.7s forwards; }
+        .gallery-item:nth-child(8) { animation: fadeInUp 0.6s ease 0.8s forwards; }
+        .gallery-item:nth-child(9) { animation: fadeInUp 0.6s ease 0.9s forwards; }
+        .gallery-item:nth-child(10) { animation: fadeInUp 0.6s ease 1.0s forwards; }
+        .gallery-item:nth-child(11) { animation: fadeInUp 0.6s ease 1.1s forwards; }
+        .gallery-item:nth-child(12) { animation: fadeInUp 0.6s ease 1.2s forwards; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            z-index: 2001;
+        }
+
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                columns: 2;
+                column-gap: 12px;
+            }
+
+            .gallery-item {
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .collection-header {
+                padding: 40px 20px;
+            }
+
+            .collection-title {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+
+            .collection-description {
+                font-size: 1rem;
+            }
+
+            .gallery {
+                padding: 0 20px 60px;
+            }
+
+            .gallery-grid {
+                columns: 1;
+                column-gap: 0;
+            }
+
+            .gallery-item {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">johan.landscapes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="collections.html">COLLECTIONS</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="https://www.instagram.com/johan.landscapes/" target="_blank" class="instagram-link">
+                    <svg class="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="m16 11.37A4 4 0 1 1 12.37 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="collection-header">
+            <h1 class="collection-title">CHAMONIX</h1>
+            <p class="collection-description">Alpine grandeur in the heart of the French Alps</p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox('File-22.jpg')">
+                    <img src="File-22.jpg" alt="Chamonix Image 1">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-23.jpg')">
+                    <img src="File-23.jpg" alt="Chamonix Image 2">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-24.jpg')">
+                    <img src="File-24.jpg" alt="Chamonix Image 3">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-25.jpg')">
+                    <img src="File-25.jpg" alt="Chamonix Image 4">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-26.jpg')">
+                    <img src="File-26.jpg" alt="Chamonix Image 5">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-27.jpg')">
+                    <img src="File-27.jpg" alt="Chamonix Image 6">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-28.jpg')">
+                    <img src="File-28.jpg" alt="Chamonix Image 7">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-58.jpg')">
+                    <img src="File-58.jpg" alt="Chamonix Image 8">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-59.jpg')">
+                    <img src="File-59.jpg" alt="Chamonix Image 9">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-60.jpg')">
+                    <img src="File-60.jpg" alt="Chamonix Image 10">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-61.jpg')">
+                    <img src="File-61.jpg" alt="Chamonix Image 11">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-62.jpg')">
+                    <img src="File-62.jpg" alt="Chamonix Image 12">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-close" id="lightbox-close">&times;</div>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            var nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(17, 17, 17, 0.98)';
+                nav.style.padding = '20px 50px';
+            } else {
+                nav.style.background = 'rgba(17, 17, 17, 0.95)';
+                nav.style.padding = '25px 50px';
+            }
+        });
+
+        // Lightbox functionality
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === e.currentTarget) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
