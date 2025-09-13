@@ -57,6 +57,20 @@
             animation: fadeInUp 1s ease 0.5s forwards;
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #f5f5f5;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -548,8 +562,8 @@
         /* Mobile Responsive */
         @media (max-width: 1200px) {
             .gallery-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
+                columns: 3;
+                column-gap: 10px;
             }
         }
 
@@ -558,8 +572,27 @@
                 padding: 15px 20px;
             }
 
+            .hamburger {
+                display: flex;
+            }
+
             .nav-links {
-                gap: 15px;
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(17, 17, 17, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 50px;
+                gap: 30px;
+                transition: right 0.3s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
             }
 
             .nav-links a {
@@ -594,12 +627,23 @@
             }
 
             .gallery {
-                padding: 80px 20px;
+                padding: 80px 0;
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                columns: 1;
+                column-gap: 0;
+            }
+
+            .gallery-item {
+                margin-bottom: 15px;
+                width: 100%;
+            }
+
+            .gallery-item img {
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                border-radius: 0;
             }
 
             .about {
@@ -638,9 +682,24 @@
         }
 
         @media (max-width: 480px) {
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .collection-card {
+                height: 300px;
+            }
+
+            .collection-title {
+                font-size: 1.3rem;
+            }
+
+            .collection-count {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -650,9 +709,13 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <div class="logo">johan.landscapes</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">HOME</a></li>
-                <li><a href="#featured">FEATURED</a></li>
                 <li><a href="#collections">COLLECTIONS</a></li>
                 <li><a href="#gallery">GALLERY</a></li>
                 <li><a href="#about">ABOUT</a></li>
@@ -690,7 +753,7 @@
                 <div class="collection-preview">VIEW COLLECTION</div>
                 <div class="collection-info">
                     <div class="collection-title">SIERRAS</div>
-                    <div class="collection-count">13 photographs</div>
+                    <div class="collection-count">15 photographs</div>
                 </div>
             </div>
 
@@ -699,7 +762,7 @@
                 <div class="collection-preview">VIEW COLLECTION</div>
                 <div class="collection-info">
                     <div class="collection-title">LOFOTEN ISLANDS</div>
-                    <div class="collection-count">5 photographs</div>
+                    <div class="collection-count">12 photographs</div>
                 </div>
             </div>
 
@@ -708,7 +771,7 @@
                 <div class="collection-preview">VIEW COLLECTION</div>
                 <div class="collection-info">
                     <div class="collection-title">CHAMONIX</div>
-                    <div class="collection-count">7 photographs</div>
+                    <div class="collection-count">12 photographs</div>
                 </div>
             </div>
 
@@ -717,7 +780,7 @@
                 <div class="collection-preview">VIEW COLLECTION</div>
                 <div class="collection-info">
                     <div class="collection-title">MADEIRA</div>
-                    <div class="collection-count">3 photographs</div>
+                    <div class="collection-count">8 photographs</div>
                 </div>
             </div>
         </div>
@@ -928,11 +991,11 @@
         <div class="about-content">
             <img src="Portrait.jpg" alt="Johan Saeij Portrait" class="about-image">
             <div class="about-text">
-                <p>I'm Johan Saeij, a landscape photographer who discovered my passion for capturing the natural world just under a year ago. What started as curiosity has quickly evolved into a deep connection with the mountains, valleys, and remote places that shape our planet.</p>
-                
-                <p>My journey has taken me through some of the most breathtaking locations on Earth. The dramatic peaks and ethereal light of the Lofoten Islands left an indelible mark on me, while the alpine grandeur of Chamonix showed me the raw power and beauty of the French Alps. From the rugged Sierra Nevada mountains to the volcanic landscapes of Madeira, each destination has taught me something new about light, composition, and patience.</p>
-                
-                <p>Through my lens, I seek to capture not just what I see, but what I feel in these moments of solitude with nature. Each photograph represents hours of waiting, hiking, and simply being present in landscapes that humble and inspire me. Photography has become my way of sharing these intimate conversations between light and land.</p>
+                <p>I’m Johan Saeij, a landscape photographer based in Santa Barbara, California. I started taking pictures a little under a year ago and have developed a strong passion for both photography and the outdoors.
+
+                <p>I currently shoot on a Sony A7III with a G Master 16–35mm f/2.8 lens. I also use a tripod and various filters to enhance my landscape shots. Over the past year, I’ve had the opportunity to visit some of the most beautiful places on Earth.
+
+                <p>As I continue my photography journey, I hope to explore many more places and keep experiencing some of the world’s most breathtaking landscapes. Feel free to reach out if you have any questions.
             </div>
         </div>
     </section>
@@ -944,7 +1007,6 @@
                 <h3>EXPLORE</h3>
                 <div class="footer-links">
                     <a href="#home">Home</a>
-                    <a href="#featured">Featured</a>
                     <a href="#collections">Collections</a>
                     <a href="#gallery">Gallery</a>
                     <a href="#about">About</a>
@@ -999,6 +1061,11 @@
             }
         });
 
+        // Hamburger menu toggle
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
         // Lightbox functionality
         function openLightbox(imageSrc) {
             const lightbox = document.getElementById('lightbox');
@@ -1030,17 +1097,4 @@
         });
     </script>
 </body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Johan Saeij - Landscape Photography Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+</html>

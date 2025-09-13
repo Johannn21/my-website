@@ -176,6 +176,8 @@
         .gallery-item:nth-child(11) { animation: fadeInUp 0.6s ease 1.1s forwards; }
         .gallery-item:nth-child(12) { animation: fadeInUp 0.6s ease 1.2s forwards; }
         .gallery-item:nth-child(13) { animation: fadeInUp 0.6s ease 1.3s forwards; }
+        .gallery-item:nth-child(14) { animation: fadeInUp 0.6s ease 1.4s forwards; }
+        .gallery-item:nth-child(15) { animation: fadeInUp 0.6s ease 1.5s forwards; }
 
         @keyframes fadeInUp {
             to {
@@ -285,9 +287,9 @@
             <div class="logo">johan.landscapes</div>
             <ul class="nav-links">
                 <li><a href="index.html">HOME</a></li>
-                <li><a href="#gallery">GALLERY</a></li>
-                <li><a href="collections.html">COLLECTIONS</a></li>
-                <li><a href="#about">ABOUT</a></li>
+                <li><a href="index.html#collections">COLLECTIONS</a></li>
+                <li><a href="index.html#gallery">GALLERY</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
                 <li><a href="https://www.instagram.com/johan.landscapes/" target="_blank" class="instagram-link">
                     <svg class="instagram-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -306,7 +308,7 @@
             <p class="collection-description">Capturing the rugged beauty and dramatic landscapes of the Sierra Nevada mountains</p>
         </div>
 
-        <div class="gallery">
+        <div class="gallery" id="gallery">
             <div class="gallery-grid">
                 <div class="gallery-item" onclick="openLightbox('File-34.jpg')">
                     <img src="File-34.jpg" alt="Sierras Image 1">
@@ -346,6 +348,12 @@
                 </div>
                 <div class="gallery-item" onclick="openLightbox('File-03.jpg')">
                     <img src="File-03.jpg" alt="Sierras Image 13">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-63.jpg')">
+                    <img src="File-63.jpg" alt="Sierras Image 14">
+                </div>
+                <div class="gallery-item" onclick="openLightbox('File-64.jpg')">
+                    <img src="File-64.jpg" alt="Sierras Image 15">
                 </div>
             </div>
         </div>
